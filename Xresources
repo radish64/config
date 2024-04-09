@@ -1,11 +1,12 @@
 ! special
 *.foreground:   #d4d4d4
-*.background:   #262626
-*.cursorColor:  #fcb8f2
+!*.background:	#241a3a
+*.background:	#383c4a
+*.cursorColor:  #d4d4d4
 
 ! black
 *.color0:       #282a2e
-*.color8:       #373b41
+*.color8:       #646e7b
 
 ! red
 *.color1:       #d95757
@@ -21,7 +22,7 @@
 
 ! blue
 *.color4:       #5f819d
-*.color12:      #a6d3fa
+*.color12:      #6eb9fb
 
 ! magenta
 *.color5:       #85678f
@@ -35,12 +36,10 @@
 *.color7:       #d0d7dd
 *.color15:      #f3f7f4
 
-
 !urxvt
 URxvt.scrollBar: false
 URxvt.font:xft:Terminus:pixelsize=16
 URxvt*depth:32
-URxvt*background: #262626
 !URxvt*background: rgba:1300/1300/1300/eeee
 
 !keybinds

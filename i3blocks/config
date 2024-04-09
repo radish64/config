@@ -12,22 +12,27 @@ separator_block_width=15
 
 [cputemp]
 command=sensors | grep CPU | awk '{print "", $2}'| sed s/+//
-color=#fc9595
+color=#fc8b8b
 interval=5
 
+[fanspeed]
+command=sensors | grep fan1 | awk '{print "",$2,$3}'
+interval=2
+color=#fc987e
+
 [battery]
-command=battery
+command=/home/river/bin/battery
 interval=10
-color=#f2cd85
+color=#fdbe83
 
 [volume]
-command=volume
+command=/home/river/bin/volume
 color=#fcfa92
 interval=once
 signal=1
 
 [brightness]
-command=blight get | awk '{print "",int(($1/852)*100)"%"}'
+command=light | awk '{print "",int($1)"%"}'
 color=#bef398
 interval=once
 signal=1
@@ -38,12 +43,12 @@ interval=1200
 color=#67f08e
 
 [ip]
-command=ip add | grep inet | grep global | awk '{print "", $2}'
+command=ip add | grep inet | grep global | sed 1q | awk '{print "", $2}'
 interval=once
 color=#a8f2e8
 
 [weather]
-command=wttrico
+command=/home/river/bin/wttrico
 color=#a6d3fa
 interval=1200
 
