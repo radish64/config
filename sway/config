@@ -1,21 +1,21 @@
 #color scheme
-set_from_resource $black i3wm.color8 #373b41
-set_from_resource $red i3wm.color9 #fc9595
-set_from_resource $green i3wm.color10 #a8ff68
-set_from_resource $yellow i3wm.color11 #f2cd85
-set_from_resource $blue i3wm.color12 #a6d3fa
-set_from_resource $magenta i3wm.color13 #e491eb
-set_from_resource $cyan i3wm.color14 #a8f2e8
-set_from_resource $white i3wm.color15 #c5c8c6
-set_from_resource $bg i3wm.background #383c4a
+set $black #1D2430
+set $red #fa5ead
+set $green #00fbad
+set $yellow #ffdf5f
+set $blue #5eadfc
+set $magenta #fa5ead
+set $cyan #6a6f87
+set $white #eff1f5
+set $bg #1a1e2a
 
-client.focused $blue $bg $white $blue $blue 
+client.focused $blue $bg $white $blue $blue
 client.unfocused $black $bg $white $black $black
 client.urgent $yellow $bg $white $black $black
 
 set $mod Mod4
 font pango:FreeSans 10
-set $term "urxvt"
+set $term "foot"
 bindsym $mod+Return exec $term
 
 # Use pactl to adjust volume in PulseAudio.
@@ -41,7 +41,7 @@ floating_modifier $mod
 #kill window
 bindsym $mod+Shift+q kill
 
-# start rofi (a program launcher)
+# start dmenu (a program launcher)
 bindsym $mod+d exec rofi -show run
 bindsym XF86LaunchA exec rofi -show run
 
@@ -69,8 +69,10 @@ bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
-# split in horizontal/verical orientation
+# split in horizontal orientation
 bindsym $mod+period split h
+
+# split in vertical orientation
 bindsym $mod+comma split v
 
 # enter fullscreen mode for the focused container
@@ -125,40 +127,42 @@ bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
 #aѕsign certain programs to workspaces
-assign [class="firefox-esr"] 1
-assign [class="libreoffice"] 2
-assign [class="^Zathura$"] 2
+assign [app_id="firefox-esr"] 1
+assign [app_id="libreoffice"] 2
+#assign [app_id="zathura"] 2
 assign [class="discord"] 3
-assign [class="^mpv$"] 4
-for_window [class="Spotify"] move container to workspace 4
-#for_window [class="parallel-launcher"] floating enable
-for_window [class="retroarch"] floating enable
-for_window [class="Galculator"] floating enable
+assign [app_id="^mpv$"] 4
+for_window [app_id="Spotify"] move container to workspace 4
+for_window [app_id="parallel-launcher"] floating enable
+for_window [app_id="zenity"] floating enable
+for_window [app_id="retroarch"] floating enable
+for_window [app_id="galculator"] floating enable
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart && xrdb -merge ~/.Xresources
+bindsym $mod+Shift+r exec swaymsg reload 
 
 # exit i3 (logs you out of your X session)
-# bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+#bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+#bindsym $mod+Shift+e exec ~/.config/rofi/powermenu/powermenu.sh
 bindsym $mod+Shift+e exec powermenu
+
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
 
         # These bindings trigger as soon as you enter the resize mode
-		# arrows
         bindsym Left resize shrink width 10 px or 10 ppt
         bindsym Down resize grow height 10 px or 10 ppt
         bindsym Up resize shrink height 10 px or 10 ppt
         bindsym Right resize grow width 10 px or 10 ppt
-		# vim keys
         bindsym h resize shrink width 10 px or 10 ppt
         bindsym j resize grow height 10 px or 10 ppt
         bindsym k resize shrink height 10 px or 10 ppt
         bindsym l resize grow width 10 px or 10 ppt
+
         # back to normal: Enter or Escape or $mod+r
         bindsym Return mode "default"
         bindsym Escape mode "default"
@@ -167,38 +171,45 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+#natural scrolling
+input type:touchpad {
+	natural_scroll enabled
+}
+
 #bar
 bar {
-	i3bar_command i3bar
-        status_command i3blocks 
+	font pango:FreeSans, FontAwesome 6 Free Solid 10
+	swaybar_command swaybar
+        status_command i3blocks
 	position top
 	colors {
 		background $bg
 		focused_workspace $blue $blue $black
 		inactive_workspace $bg $bg $white
-		urgent_workspace $red $red $black
+		urgent_workspace $red $red $white
 	}
 }
 
-#Gaps settings
+#gaps settings
 gaps inner 15
 gaps outer 5
-for_window [class="^.*"] border pixel 1
+default_border pixel 2
+default_floating_border pixel 2
 
 #Startup programs 
-exec_always xinput set-prop 10 322 1
 exec_always ~/.config/wallpaper.sh
-exec_always picom
-exec_always xrdb -load .Xresources 
-#exec_always light-locker --lock-on-suspend
-exec_always blueman-applet
-#exec_always xss-lock --transfer-sleep-lock -- i3lock -neti ~/pix/wallpaper/feintile.png
+exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+exec_always source ~/.profile
+exec_always source ~/.bashrc
+exec_always swayidle after-resume swaylock -l -i /home/$USER/etc/lockscreen.jpg;;
 
-#Shortcuts
+#Keybinds
 bindsym $mod+w exec firefox
+bindsym $mod+Shift+w exec enterurl
 bindsym $mod+e exec thunar
 bindsym XF86Explorer exec thunar
-bindsym Print exec scrot -e 'mv $f ~/pix/screenshots/'
+bindsym Print exec blueshot
+bindsym Mod1+Print exec wayshot -c ~/pix/screenshots/$(date '+%Y-%d-%m_%H%M%S').png
 bindsym XF86Eject exec eject
-bindsym XF86Tools exec urxvt -e vim ~/.config/i3/config
-bindsym XF86Search exec rofi -dmenu -p "Google Search" -l 0 | google
+bindsym XF86Tools exec foot -e vim .config/sway/config
+bindsym XF86Search exec rofi -dmenu -p "Google Search:" -l 0 | google

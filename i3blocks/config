@@ -11,58 +11,64 @@ separator=true
 separator_block_width=15
 
 [cputemp]
-command=sensors | grep CPU | awk '{print "", $2}'| sed s/+//
-color=#fc8b8b
-interval=5
+#command=sensors | grep CPU | awk '{print "", $2}'| sed s/+//
+command=sensors | grep CPU | awk '{print "", $2}'| sed s/+//
+color=#fc6453
+interval=1
 
 [fanspeed]
 command=sensors | grep fan1 | awk '{print "",$2,$3}'
-interval=2
-color=#fc987e
+interval=1
+color=#fc8953
 
 [battery]
-command=/home/river/bin/battery
+command=$HOME/bin/battery
 interval=10
-color=#fdbe83
+color=#fcc153
 
 [volume]
-command=/home/river/bin/volume
-color=#fcfa92
+command=$HOME/bin/volume
 interval=once
+color=#e9fc53
 signal=1
 
 [brightness]
-command=light | awk '{print "",int($1)"%"}'
-color=#bef398
+command=light | awk '{print "",int($1 + 0.5)"%"}'
 interval=once
+color=#6bfc4e
 signal=1
 
 [storage]
 command=df /home -h | grep / | awk '{print "", $4}'
 interval=1200
-color=#67f08e
+color=#4efc6b
+
+#[stock]
+#command=$HOME/bin/ticker SPY
+#interval=1200
+#color=#4df7ca
 
 [ip]
 command=ip add | grep inet | grep global | sed 1q | awk '{print "", $2}'
 interval=once
-color=#a8f2e8
+color=#4dd8ff
 
 [weather]
-command=/home/river/bin/wttrico
-color=#a6d3fa
+command=$HOME/bin/wttrico
+color=#6992fa
 interval=1200
 
 [greetings]
-color=#a683fa
 command=echo "Hello, $USER!"
 interval=once
+color=#9163ff
 
 [date]
 command=date '+%Y-%m-%d'| awk '{print "", $0}'
 interval=1
-color=#e491eb
+color=#d162fc
 
 [time]
 command=date '+%H:%M:%S' | awk '{print "", $0, ""}'
 interval=1
-color=#fa83d9
+color=#ff63ea
