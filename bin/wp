@@ -1,0 +1,52 @@
+#!/bin/bash
+image=$({ if ! [ $(realpath ~/pix/wallpaper/$1) = "/home/$USER/pix/wallpaper" ]; then echo ../; fi ; ls ~/pix/wallpaper/$1 | grep -v "\." | sed -e "s|$|/|g" ; ls ~/pix/wallpaper/$1 | grep -E ".png|.jpg"; } | rofi -dmenu -p Wallpaper)
+if [ -z "$image" ]; then exit 1; fi
+echo $image
+if [ $(echo $image | grep -c "/" ) -gt 0 ]; then $0 $1/$image & exit 0; fi
+sxiv ~/pix/wallpaper/$1/"$image" & x=`ps | awk '/sxiv/ {print $1}'` ;
+sure=$(rofi -location 2 -dmenu -p 'Are you sure?' -l 2 << 'EOF'
+yes
+no
+EOF
+); kill $x
+case $sure in
+yes)
+fill=$(rofi -dmenu -p Fill -l 6 << 'EOF'
+center
+fill
+fit
+stretch
+tile 
+EOF
+)
+if [ -z $fill ]; then exit 1; fi
+case $fill in
+center)
+    xfill=center
+    ;;
+fill)
+    xfill=zoom
+    ;;
+fit)
+    xfill=maximize
+    ;;
+stretch)
+    xfill=stretch
+    ;;
+tile)
+    xfill=tile
+    ;;
+*)
+    xfill=$fill
+    ;;
+esac
+imgpath=$(realpath ~/pix/wallpaper/$1/$image)
+echo $imgpath
+echo xwallpaper --$xfill $imgpath > ~/.config/wallpaper.sh
+echo swaybg --mode $fill --image $imgpath >> ~/.config/wallpaper.sh
+pkill swaybg
+~/.config/wallpaper.sh
+;;
+no)
+$0 $1
+esac

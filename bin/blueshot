@@ -1,0 +1,27 @@
+#!/bin/bash
+alias smallrofi="rofi -theme-str 'window {width:25%;}'"
+timestamp=$(date '+%Y-%m-%d_%H%M%S')
+
+choice1=$(smallrofi -dmenu -l 3 -P "Screenshot Destination" << 'EOF'
+ Screenshots Folder
+ Choose Folder
+ Clipboard
+EOF
+)
+
+case $choice1 in
+\ Screenshots\ Folder)
+wayshot -x -s ~/pix/screenshots/$timestamp.png
+echo ~/pix/screenshots/$timestamp.png
+;;
+
+\ Choose\ Folder)
+#choice2=$(rofi -dmenu -l 0 -P "Path to save screenshot:" | sed "s|~|/home\/$USER|g")
+choice2=$(zenity --file-selection --directory)
+wayshot -x -s $choice2/$timestamp.png
+echo $choice2/$timestamp.png
+;;
+
+\ Clipboard)
+wayshot -x -s -c
+esac

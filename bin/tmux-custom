@@ -1,0 +1,14 @@
+#!/bin/bash
+SESSION_NAME=main
+if [ "$#" -gt 0 ]; then
+    tmux "$@"
+else
+    if tmux has-session -t $SESSION_NAME 2>/dev/null; then
+        tmux a -t $SESSION_NAME
+    else
+        tmux new-session -d -s $SESSION_NAME nvim ./
+        tmux new-window -t $SESSION_NAME bash
+        tmux select-window -t 1
+        tmux attach-session -t $SESSION_NAME
+    fi
+fi

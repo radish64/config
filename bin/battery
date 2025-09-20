@@ -1,6 +1,6 @@
-result=$(acpi | cut -d '%' -f 1 | rev | cut -d ',' -f 1 | rev | awk '{print $1}')
-percent=$(echo $result | awk '{print int(($1 + $2)/2)}')
-case $(acpi | grep Charging | wc -l) in
+#!/bin/bash
+percent=$(acpi | cut -d ',' -f 2 | awk '{SUM+=$1}END{print int(SUM/NR)}')
+case $(acpi | grep -c Charging) in
 0)
 	if [ $percent -gt 75 ];
 	then

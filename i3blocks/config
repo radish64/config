@@ -23,7 +23,7 @@ color=#fc8953
 
 [battery]
 command=$HOME/bin/battery
-interval=10
+interval=1
 color=#fcc153
 
 [volume]

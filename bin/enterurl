@@ -1,0 +1,4 @@
+#!/bin/bash
+url=$(rofi -dmenu -l 0 -P "Enter URL:" | sed -e s/\ /%20/g)
+if [ -z $url ]; then exit 1; fi
+firefox $url

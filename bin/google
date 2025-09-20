@@ -1,0 +1,4 @@
+#!/bin/bash
+query=$(sed -e s/+/%2B/g | sed -e s/\ /+/g)
+if [ -z $query ]; then exit 1; fi
+firefox "https://www.duckduckgo.com/search?q="$query
