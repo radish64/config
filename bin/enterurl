@@ -1,4 +1,15 @@
-#!/bin/bash
-url=$(rofi -dmenu -l 0 -P "Enter URL:" | sed -e s/\ /%20/g)
+#!/bin/ksh
+SITE_HISTORY_FILE=$HOME/etc/bookmarks
+url=$(awk '{print $2}' < $SITE_HISTORY_FILE | rofi -dmenu -l 5 -P "Enter URL" | sed -e s/\ /%20/g)
 if [ -z $url ]; then exit 1; fi
+if [ $(grep -c $url $SITE_HISTORY_FILE) -gt 0 ]; then
+    count=$(grep $url $SITE_HISTORY_FILE | awk '{print $1}')
+    count=$((count+1))
+else
+    count=1
+fi
+
+sed -i.bak "/$url/d" $SITE_HISTORY_FILE
+echo $count $url >> $SITE_HISTORY_FILE
+sort -ro $SITE_HISTORY_FILE $SITE_HISTORY_FILE 
 firefox $url

@@ -1,2 +1,2 @@
-#!/bin/bash
+#!/bin/sh
 nohup mpv https://twitch.tv/$1 >> /dev/null

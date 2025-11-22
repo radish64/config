@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 curl -L "https://discord.com/api/download/stable?platform=linux&format=deb" > ~/discordupdate.deb
 sudo dpkg -i ~/discordupdate.deb
 rm -fv ~/discordupdate.deb

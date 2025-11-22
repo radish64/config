@@ -33,7 +33,7 @@ color=#e9fc53
 signal=1
 
 [brightness]
-command=light | awk '{print "",int($1 + 0.5)"%"}'
+command=light | awk '{print "",int((($1 + 0.5)/5))*5"%"}'
 interval=once
 color=#6bfc4e
 signal=1

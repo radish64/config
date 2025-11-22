@@ -15,29 +15,30 @@ alias cd..='cd ..'
 alias :q='exit'
 alias rm='rm -i'
 alias ls='ls --color=auto'
+alias l='ls'
 alias ll='ls -lh'
-alias grep='grep --color=auto'
 alias la='ls -lha'
+alias grep='grep --color=auto'
 alias cx='chmod +x'
+alias cdf='cd $(find . -type d -print | fzf)'
 
-#building
+#build
 alias make='make -j4'
-alias jc="javac"
+alias jc='javac'
 alias jca='javac *.java'
-alias jcd="javac -d ."
+alias jcd='javac -d .'
 
 #config
-alias swayconfig='vim ~/.config/sway/config'
-
-#video
-alias mpva='mpv --no-audio-display'
-alias mpvl='mpv --loop'
-alias yta='yt-dlp -x'
+alias swayconfig='nvim ~/.config/sway/config'
+alias footconfig='nvim ~/.config/foot/foot.ini'
 
 #common programs
 alias vi='nvim'
 alias tmux='tmux-custom'
+alias mpva='mpv --no-audio-display'
+alias yta='yt-dlp -x'
 alias ftp='tnftp'
+alias lp2='lp -o sides=two-sided-long-edge'
 
 
 eval `dircolors ~/.config/dircolors`

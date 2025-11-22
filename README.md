@@ -1,7 +1,7 @@
 ### River's Linux Configs
-###### They might work on BSD too idk
+###### Some of them work on BSD too
 
-- Put a dot before the bashrc and profile ofc
+- Put a dot before the kshrc and profile ofc
 - You can copy the folders (except bin) into your `$XDG_CONFIG_HOME`
 - Put the bin file in your home folder and also your `$PATH`
     - The i3blocks config uses a couple of them

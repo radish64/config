@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 image=$({ if ! [ $(realpath ~/pix/wallpaper/$1) = "/home/$USER/pix/wallpaper" ]; then echo ../; fi ; ls ~/pix/wallpaper/$1 | grep -v "\." | sed -e "s|$|/|g" ; ls ~/pix/wallpaper/$1 | grep -E ".png|.jpg"; } | rofi -dmenu -p Wallpaper)
 if [ -z "$image" ]; then exit 1; fi
 echo $image

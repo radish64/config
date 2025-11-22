@@ -1,15 +1,26 @@
 #color scheme
-set $black #1D2430
-set $red #fa5ead
-set $green #00fbad
-set $yellow #ffdf5f
-set $blue #5eadfc
-set $magenta #fa5ead
-set $cyan #6a6f87
-set $white #eff1f5
-set $bg #1a1e2a
+set $black #282e28
+set $red #bf3939
+set $green #40944a
+set $yellow #ded55f
+set $blue #486d94
+set $magenta #6f457c
+set $cyan #43948a
+set $white #b7deb5
 
-client.focused $blue $bg $white $blue $blue
+set $lightblack #374137
+set $lightred #e97777
+set $lightgreen #7fdb7d
+set $lightyellow #f0d574
+set $lightblue #77a5cc
+set $lightmagenta #c674df
+set $lightcyan #84d9cd
+set $lightwhite #d2ffd2
+
+set $bg #1e1f21
+set $alphabg #1a1e2ad0
+
+client.focused $green $bg $white $green $green
 client.unfocused $black $bg $white $black $black
 client.urgent $yellow $bg $white $black $black
 
@@ -32,8 +43,8 @@ bindsym XF86AudioPrev exec mpc prev
 bindsym XF86AudioStop exec mpc stop
 
 #Control backlight
-bindsym XF86MonBrightnessUp exec sudo light -A 10 && pkill -RTMIN+1 i3blocks
-bindsym XF86MonBrightnessDown exec sudo light -U 10 && pkill -RTMIN+1 i3blocks
+bindsym XF86MonBrightnessUp exec sudo light -A 5 && pkill -RTMIN+1 i3blocks
+bindsym XF86MonBrightnessDown exec sudo light -U 5 && pkill -RTMIN+1 i3blocks
 
 #floating modifier
 floating_modifier $mod
@@ -184,14 +195,14 @@ bar {
 	position top
 	colors {
 		background $bg
-		focused_workspace $blue $blue $black
-		inactive_workspace $bg $bg $white
+		focused_workspace $bg $bg $lightwhite
+		inactive_workspace $bg $bg $green
 		urgent_workspace $red $red $white
 	}
 }
 
 #gaps settings
-gaps inner 15
+gaps inner 5
 gaps outer 5
 default_border pixel 2
 default_floating_border pixel 2
@@ -202,6 +213,8 @@ exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSO
 exec_always source ~/.profile
 exec_always source ~/.bashrc
 exec_always swayidle after-resume swaylock -l -i /home/$USER/etc/lockscreen.jpg;;
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+
 
 #Keybinds
 bindsym $mod+w exec firefox
@@ -212,4 +225,4 @@ bindsym Print exec blueshot
 bindsym Mod1+Print exec wayshot -c ~/pix/screenshots/$(date '+%Y-%d-%m_%H%M%S').png
 bindsym XF86Eject exec eject
 bindsym XF86Tools exec foot -e vim .config/sway/config
-bindsym XF86Search exec rofi -dmenu -p "Google Search:" -l 0 | google
+bindsym XF86Search exec rofi -dmenu -p "Duck Search" -l 0 | google

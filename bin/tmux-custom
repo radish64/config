@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 SESSION_NAME=main
 if [ "$#" -gt 0 ]; then
     tmux "$@"
@@ -7,7 +7,7 @@ else
         tmux a -t $SESSION_NAME
     else
         tmux new-session -d -s $SESSION_NAME nvim ./
-        tmux new-window -t $SESSION_NAME bash
+        tmux new-window -t $SESSION_NAME ksh
         tmux select-window -t 1
         tmux attach-session -t $SESSION_NAME
     fi

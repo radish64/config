@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 alias smallrofi="rofi -theme-str 'window {width:25%;}'"
 timestamp=$(date '+%Y-%m-%d_%H%M%S')
 

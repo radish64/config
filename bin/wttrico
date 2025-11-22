@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 result=$(curl -Ss 'https://wttr.in?0&T&Q' | cut -c 16- | head -2 | xargs echo)
 cloud=$(echo "$result" | grep -Eic "cloud|fog|overcast|haze|mist")
 sun=$(echo "$result" | grep -Eic "clear|sun")
@@ -7,11 +7,11 @@ rain=$(echo "$result" | grep -Eic "rain|drizzle")
 storm=$(echo "$result" | grep -Eic "storm|thunder") 
 wind=$(echo "$result" | grep -ic wind)
 dead=$(echo "$result" | grep -c "°")
-[[ "$dead" = 0 ]] && exit 1
-[[ "$cloud" = 1 ]] && icon=""
-[[ "$sun" = 1 ]] && icon=""
-[[ "$snow" = 1 ]] && icon=""
-[[ "$rain" = 1 ]] && icon=""
-[[ "$storm" = 1 ]] && icon=""
-[[ "$wind" = 1 ]] && icon=""
+[ "$dead" -eq 0 ] && exit 1
+[ "$cloud" -eq 1 ] && icon=""
+[ "$sun" -eq 1 ] && icon=""
+[ "$snow" -eq 1 ] && icon=""
+[ "$rain" -eq 1 ] && icon=""
+[ "$storm" -eq 1 ] && icon=""
+[ "$wind" -eq 1 ] && icon=""
 echo "$icon $result" 

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 percent=$(acpi | cut -d ',' -f 2 | awk '{SUM+=$1}END{print int(SUM/NR)}')
 case $(acpi | grep -c Charging) in
 0)

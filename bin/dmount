@@ -1,8 +1,10 @@
-#!/bin/bash
+#!/bin/sh
 if [ $TERM = "dumb" ]; then 
     SEND=notify-send;
+    PICK="rofi -dmenu -p Disk -l $x";
 else 
     SEND=echo;
+    PICK=fzf;
 fi
 
 devs=$(lsblk -lp | grep -E "/dev/sd[b-z][0-9]|/dev/mmcblk" | grep "part" | grep -v "/media/")
@@ -12,7 +14,7 @@ if [ -z "$devs" ]; then
 fi
 
 x=$(echo "$devs" | wc -l)
-disk=$(echo "$devs" | awk '{print $1, $4}' | rofi -dmenu -p Disk -l $x | awk '{print $1}')
+disk=$(echo "$devs" | awk '{print $1, $4}' | $PICK | awk '{print $1}')
 if [ -z "$disk" ]; then exit 1; fi
 
 if pmount "$disk"; then

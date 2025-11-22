@@ -1,0 +1,30 @@
+#!/bin/sh
+
+tempfile="/tmp/available.$$.html"
+trap "rm -f $tempfile" EXIT
+
+pandoc -s -f gfm $1 -o $tempfile
+cat << 'EOF' >> $tempfile
+<style>
+    body{
+        font-family: "FreeSans";
+        max-width: 1000px;
+    }
+    ul{
+        list-style-type: disc;
+        margin-top:5px;
+    }
+    ol{
+        list-style-type: decimal;
+        margin-top:5px;
+    }
+    li{
+        margin-top:5px;
+    }
+</style>
+EOF
+
+sed -i 's/padding-top: 50px;/padding-top: 0px;/' $tempfile 
+
+outfile=$(echo "$1" | awk -F '[/.]' '{print $(NF-1)".pdf"}')
+weasyprint $tempfile $outfile -s <(echo "@page {size: Letter; margin: 1.0cm;}") 

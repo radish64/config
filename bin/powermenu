@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 alias smallrofi="rofi -theme-str 'window {width: 25%;}'"
 
 option=$(smallrofi -dmenu -l 5 -p 'Power Menu' << 'EOF'
